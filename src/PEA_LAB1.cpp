@@ -11,5 +11,6 @@ using namespace std;
 
 int main() {
 	cout << "!!!Zaczynamy!!!" << endl; // prints !!!Zaczynamy!!!
+	cout << "Yay" << endl;
 	return 0;
 }
