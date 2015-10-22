@@ -24,3 +24,7 @@ std::string SalesMan::toString(){
 	return matrix.toString();
 }
 
+void SalesMan::generate(int cities){
+	matrix.generate(cities);
+}
+

@@ -17,6 +17,7 @@ public:
 	SalesMan();
 	void readFile (std::string filename);
 	std::string toString();
+	void generate (int cities);
 	virtual ~SalesMan();
 };
 

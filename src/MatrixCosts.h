@@ -19,6 +19,7 @@ public:
 	MatrixCosts();
 	void setCities(int cities);
 	void readFile (std::string filename);
+	void generate(int cities);
 	std::string toString();
 	virtual ~MatrixCosts();
 };
