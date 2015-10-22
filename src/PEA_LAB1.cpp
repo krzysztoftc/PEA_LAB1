@@ -7,10 +7,18 @@
 //============================================================================
 
 #include <iostream>
+#include "SalesMan.h"
+
 using namespace std;
 
 int main() {
-	cout << "!!!Zaczynamy!!!" << endl; // prints !!!Zaczynamy!!!
-	cout << "Yay" << endl;
+	SalesMan seller;
+
+	cout<<"Wczytany plik:\n";
+
+	seller.readFile("default.txt");
+
+	cout<<seller.toString();
+
 	return 0;
 }

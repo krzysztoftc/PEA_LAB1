@@ -1,0 +1,26 @@
+/*
+ * MatrixCosts.h
+ *
+ *  Created on: 22 paź 2015
+ *      Author: krzysztof
+ */
+
+#ifndef MATRIXCOSTS_H_
+#define MATRIXCOSTS_H_
+
+#include <iostream>
+
+class MatrixCosts {
+	int **matrix;
+	int size;
+	void create();
+	void remove();
+public:
+	MatrixCosts();
+	void setCities(int cities);
+	void readFile (std::string filename);
+	std::string toString();
+	virtual ~MatrixCosts();
+};
+
+#endif /* MATRIXCOSTS_H_ */
