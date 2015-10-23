@@ -17,18 +17,18 @@ int main() {
 	srand(time(0));
 
 	SalesMan seller;
-
+	MatrixCosts costs;
 	cout << "Wczytany plik:\n";
 
-	seller.readFile("default.txt");
+	costs.readFile("default.txt");
 
-	cout << seller.toString();
+	cout << costs.toString();
 
-	cout << "\nWlosowy:\n";
+	cout << "\nRedukcja:\n";
 
-	seller.generate(4);
+	cout<<"LB: "<<costs.reduction()<<endl;;
 
-	cout << seller.toString();
+	cout << costs.toString();
 
 	return 0;
 }

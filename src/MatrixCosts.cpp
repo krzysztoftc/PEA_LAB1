@@ -11,6 +11,7 @@
 #include <fstream>
 #include <sstream>
 #include <stdlib.h>
+#include <limits.h>
 
 MatrixCosts::MatrixCosts() {
 	matrix = 0;
@@ -99,8 +100,71 @@ void MatrixCosts::generate(int cities) {
 
 	for (int i = 1; i < size; i++) {
 		for (int j = 1; j < size; j++) {
-			if (i == j) matrix[i][j] = -1;
-			else matrix[i][j] = 1 + rand() % 50;
+			if (i == j)
+				matrix[i][j] = -1;
+			else
+				matrix[i][j] = 1 + rand() % 50;
 		}
 	}
+}
+
+int MatrixCosts::reduction() {
+	int bound = 0;
+	int min;
+
+	//redukcja wierszy
+	for (int i = 1; i < size; i++) {
+		min = INT_MAX;
+
+		//szukanie min
+		for (int j = 1; j < size; j++) {
+			if (matrix[i][j] == 0) {
+				min = 0;
+				break;
+			}
+			if (matrix[i][j] > 0 && matrix[i][j] < min)
+				min = matrix[i][j];
+		}
+
+		std::cout << std::endl << min << std::endl;
+
+		//redukcja
+		if (min) {
+			for (int j = 1; j < size; j++) {
+				if (matrix[i][j] > 0) {
+					matrix[i][j] -= min;
+					bound += min;
+				}
+			}
+		}
+	}
+
+	//redukcja kolumn
+	for (int i = 1; i < size; i++) {
+		min = INT_MAX;
+		//szukanie min
+		for (int j = 1; j < size; j++) {
+			if (matrix[j][i] == 0) {
+				min = 0;
+				break;
+			}
+
+			if (matrix[j][i] > 0 && matrix[j][i] < min)
+				min = matrix[j][i];
+		}
+
+		std::cout << std::endl << min << std::endl;
+
+		//redukcja
+		if (min) {
+			for (int j = 1; j < size; j++) {
+				if (matrix[j][i] > 0) {
+					matrix[j][i] -= min;
+					bound += min;
+				}
+			}
+		}
+	}
+
+	return bound;
 }
