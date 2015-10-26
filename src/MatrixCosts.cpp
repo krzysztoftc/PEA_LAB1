@@ -126,7 +126,7 @@ int MatrixCosts::reduction() {
 				min = matrix[i][j];
 		}
 
-		std::cout << std::endl << min << std::endl;
+//		std::cout << std::endl << min << std::endl;
 
 		//redukcja
 		if (min) {
@@ -153,7 +153,7 @@ int MatrixCosts::reduction() {
 				min = matrix[j][i];
 		}
 
-		std::cout << std::endl << min << std::endl;
+//		std::cout << std::endl << min << std::endl;
 
 		//redukcja
 		if (min) {
