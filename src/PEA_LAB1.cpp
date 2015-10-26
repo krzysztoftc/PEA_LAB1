@@ -27,17 +27,32 @@ int main() {
 
 	cout << "\nRedukcja:\n";
 
-	cout<<"LB: "<<costs.reduction()<<endl;
+	cout << "LB: " << costs.reduction() << endl;
 
 	cout << costs.toString();
 
-	pair<int,int> best = costs.maxMin();
-	cout<< "Max z min = ("<<best.first<<" ; "<<best.second<<")"<<endl;
+	pair<int, int> best = costs.maxMin();
+	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
+			<< endl;
 
 	costs.removeEdge(best);
 
-	cout<<"Usuniecie luku: "<<endl;
-	cout << costs.toString()<<endl;
+	cout << "Usuniecie luku: " << endl;
+	cout << costs.toString() << endl;
+
+	cout << "\nRedukcja:\n";
+
+	cout << "LB: " << costs.reduction() << endl;
+
+	cout << costs.toString() << endl;
+
+	cout << "blokowanie luku: " << endl;
+	best = costs.maxMin();
+	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
+			<< endl;
+	costs.blockEdge(best);
+
+	cout << costs.toString() << endl;
 
 	return 0;
 }
