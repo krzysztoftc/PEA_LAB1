@@ -250,7 +250,6 @@ std::pair<int, int> MatrixCosts::maxMin() {
 	return toRet;
 }
 
-//TODO poprawic indeksy przy wpiw=sywaniu niesk
 //Funkcja usuwa luk "wokol" zadanego wierzcholka
 void MatrixCosts::removeEdge(std::pair<int, int> vert) {
 
@@ -289,7 +288,7 @@ void MatrixCosts::removeEdge(std::pair<int, int> vert) {
 	size--;
 }
 
-//TODO poprawic indeksy przy wpiw=sywaniu niesk
+//funkcja blokuje luk wyznaczony przez wierzcholek
 int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 	//wybor luku - wiersza, kolumna wg zadanego w wierzcholku
 	int row;
@@ -297,8 +296,9 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 	for (row = 1; matrix[row][col] && row < size; row++)
 		;
 
+	int toRet = matrix[vert.first][vert.second];
 	//blokowanie luku
-		matrix[matrix[0][row]][matrix[col][0]] = -1;
+		matrix[row][col] = -1;
 
-	return matrix[vert.first][vert.second];
+	return toRet;
 }

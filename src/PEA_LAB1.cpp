@@ -20,7 +20,7 @@ int main() {
 	MatrixCosts costs;
 	cout << "Wczytany plik:\n";
 
-//	costs.readFile("default.txt");
+	//costs.readFile("default.txt");
 	costs.generate(5);
 
 	cout << costs.toString();
@@ -46,11 +46,25 @@ int main() {
 
 	cout << costs.toString() << endl;
 
+	best = costs.maxMin();
+	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
+			<< endl;
+	costs.removeEdge(best);
+
+	cout << "Usuniecie luku: " << endl;
+	cout << costs.toString() << endl;
+
+	cout << "\nRedukcja:\n";
+
+	cout << "LB: " << costs.reduction() << endl;
+
+	cout << costs.toString() << endl;
+
 	cout << "blokowanie luku: " << endl;
 	best = costs.maxMin();
 	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
 			<< endl;
-	costs.blockEdge(best);
+	cout << "Usuwany: " << costs.blockEdge(best) << endl;
 
 	cout << costs.toString() << endl;
 
