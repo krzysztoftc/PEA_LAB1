@@ -9,13 +9,14 @@
 #define SOLUTIONNODE_H_
 
 #include <list>
+#include "MatrixCosts.h"
 
 struct SolutionNode{
 	MatrixCosts matrix;
 	int lowBound;
-	SolutionNode leftSon;
-	SolutionNode rightSon;
-	SolutionNode parent;
+	SolutionNode *leftSon;
+	SolutionNode *rightSon;
+	SolutionNode *parent;
 	std::list<int> trace;
 };
 
