@@ -12,6 +12,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <limits.h>
+#include <cstring>
 
 MatrixCosts::MatrixCosts() {
 	matrix = 0;
@@ -302,3 +303,18 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 
 	return toRet;
 }
+
+MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts){
+	size = matrixCosts.size;
+
+	create();
+
+	memcpy((void*)matrix,(void*)matrixCosts.matrix,(size*size*sizeof(int)));
+
+//	for(int i = 0;i<size;i++){
+//		for(int j=0;j<size;j++){
+//			matrix [i][j] = matrixCosts.matrix[i][j];
+//		}
+//	}
+}
+
