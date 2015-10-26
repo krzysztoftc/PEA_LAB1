@@ -23,6 +23,7 @@ public:
 	int reduction();
 	std::string toString();
 	std::pair<int,int> maxMin();
+	void removeEdge(std::pair <int, int> vert);
 	virtual ~MatrixCosts();
 };
 

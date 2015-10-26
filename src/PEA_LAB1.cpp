@@ -34,5 +34,10 @@ int main() {
 	pair<int,int> best = costs.maxMin();
 	cout<< "Max z min = ("<<best.first<<" ; "<<best.second<<")"<<endl;
 
+	costs.removeEdge(best);
+
+	cout<<"Usuniecie luku: "<<endl;
+	cout << costs.toString()<<endl;
+
 	return 0;
 }

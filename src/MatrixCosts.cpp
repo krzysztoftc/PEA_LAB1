@@ -128,7 +128,7 @@ int MatrixCosts::reduction() {
 
 //		std::cout << std::endl << min << std::endl;
 
-		//redukcja
+//redukcja
 		if (min) {
 			for (int j = 1; j < size; j++) {
 				if (matrix[i][j] > 0) {
@@ -155,7 +155,7 @@ int MatrixCosts::reduction() {
 
 //		std::cout << std::endl << min << std::endl;
 
-		//redukcja
+//redukcja
 		if (min) {
 			for (int j = 1; j < size; j++) {
 				if (matrix[j][i] > 0) {
@@ -214,38 +214,74 @@ std::pair<int, int> MatrixCosts::maxMin() {
 	}
 
 	//przeglad po kolumnach
-		for (int i = 1; i < size; i++) {
-			bool zero = false;
-			currentMin = INT_MAX;
-			for (int j = 1; j < size; j++) {
-				if (matrix[j][i] == 0) {
-					//jesli sa przynajmniej dwa zera, to mozemy je wybrac
-					if (zero == true) {
-						toRet.first = i;
-						toRet.second = j;
-						currentMin = 0;
-						return toRet;
-					}
-
-					else {
-						zero = true;
-					}
+	for (int i = 1; i < size; i++) {
+		bool zero = false;
+		currentMin = INT_MAX;
+		for (int j = 1; j < size; j++) {
+			if (matrix[j][i] == 0) {
+				//jesli sa przynajmniej dwa zera, to mozemy je wybrac
+				if (zero == true) {
+					toRet.first = i;
+					toRet.second = j;
+					currentMin = 0;
+					return toRet;
 				}
-				//wybor najlepszego w danym wierszu
-				if (matrix[j][i] > 0) {
-					if (currentMin > matrix[j][i]) {
-						currentMin = matrix[j][i];
-						current.first = i;
-						current.second = j;
-					}
+
+				else {
+					zero = true;
 				}
 			}
-			//wybor najlepszego we wszystkich wierszach
-			if (best > currentMin) {
-				best = currentMin;
-				toRet = current;
+			//wybor najlepszego w danym wierszu
+			if (matrix[j][i] > 0) {
+				if (currentMin > matrix[j][i]) {
+					currentMin = matrix[j][i];
+					current.first = i;
+					current.second = j;
+				}
 			}
 		}
+		//wybor najlepszego we wszystkich wierszach
+		if (best > currentMin) {
+			best = currentMin;
+			toRet = current;
+		}
+	}
 
 	return toRet;
+}
+
+//Funkcja usuwa luk "wokol" zadanego wierzcholka
+void MatrixCosts::removeEdge(std::pair<int, int> vert) {
+
+	//wybor luku - wiersza, kolumna wg zadanego w wierzcholku
+	int row;
+	int col = vert.second;
+	for (row = 1; matrix[row][col] && row < size; row++);
+
+	//blokowanie luku powrotnego
+	matrix[col][row] = -1;
+
+	//usuwanie luku - kopiowanie wartosci do tymczasowej tablicy
+	int **temp = new int*[size - 1];
+
+	for (int i = 0; i < size - 1; i++) {
+		temp[i] = new int[size - 1];
+	}
+
+	//i,j - indeksy zrodlowej
+	//k,l - indeksy docleowej
+	for (int i = 0, k = 0; i < size; i++) {
+		if (i == row) continue;
+		for (int j = 0, l = 0; j < size; j++) {
+			if (j == col) continue;
+			temp[k][l++] = matrix[i][j];
+		}
+		k++;
+	}
+
+	remove();
+
+	matrix = temp;
+	size --;
+
 }
