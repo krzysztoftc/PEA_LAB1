@@ -22,6 +22,7 @@ public:
 	void generate(int cities);
 	int reduction();
 	std::string toString();
+	std::pair<int,int> maxMin();
 	virtual ~MatrixCosts();
 };
 

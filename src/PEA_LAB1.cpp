@@ -20,15 +20,19 @@ int main() {
 	MatrixCosts costs;
 	cout << "Wczytany plik:\n";
 
-	costs.readFile("default.txt");
+//	costs.readFile("default.txt");
+	costs.generate(5);
 
 	cout << costs.toString();
 
 	cout << "\nRedukcja:\n";
 
-	cout<<"LB: "<<costs.reduction()<<endl;;
+	cout<<"LB: "<<costs.reduction()<<endl;
 
 	cout << costs.toString();
+
+	pair<int,int> best = costs.maxMin();
+	cout<< "Max z min = ("<<best.first<<" ; "<<best.second<<")"<<endl;
 
 	return 0;
 }

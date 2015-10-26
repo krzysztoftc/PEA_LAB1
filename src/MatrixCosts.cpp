@@ -169,4 +169,83 @@ int MatrixCosts::reduction() {
 	return bound;
 }
 
+//wybiera najwieksza sposrod minimalnych wartosci w wierszach i kolumnach
+//zwraca pare <wiersz, kolumna> (indeksy macierzy)
 
+std::pair<int, int> MatrixCosts::maxMin() {
+	std::pair<int, int> toRet;
+	std::pair<int, int> current;
+
+	int currentMin = INT_MAX;
+	int best = INT_MAX;
+
+	//przeglad po wierszach
+	for (int i = 1; i < size; i++) {
+		bool zero = false;
+		currentMin = INT_MAX;
+		for (int j = 1; j < size; j++) {
+			if (matrix[i][j] == 0) {
+				//jesli sa przynajmniej dwa zera, to mozemy je wybrac
+				if (zero == true) {
+					toRet.first = i;
+					toRet.second = j;
+					currentMin = 0;
+					return toRet;
+				}
+
+				else {
+					zero = true;
+				}
+			}
+			//wybor najlepszego w danym wierszu
+			if (matrix[i][j] > 0) {
+				if (currentMin > matrix[i][j]) {
+					currentMin = matrix[i][j];
+					current.first = i;
+					current.second = j;
+				}
+			}
+		}
+		//wybor najlepszego we wszystkich wierszach
+		if (best > currentMin) {
+			best = currentMin;
+			toRet = current;
+		}
+	}
+
+	//przeglad po kolumnach
+		for (int i = 1; i < size; i++) {
+			bool zero = false;
+			currentMin = INT_MAX;
+			for (int j = 1; j < size; j++) {
+				if (matrix[j][i] == 0) {
+					//jesli sa przynajmniej dwa zera, to mozemy je wybrac
+					if (zero == true) {
+						toRet.first = i;
+						toRet.second = j;
+						currentMin = 0;
+						return toRet;
+					}
+
+					else {
+						zero = true;
+					}
+				}
+				//wybor najlepszego w danym wierszu
+				if (matrix[j][i] > 0) {
+					if (currentMin > matrix[j][i]) {
+						currentMin = matrix[j][i];
+						current.first = i;
+						current.second = j;
+					}
+				}
+			}
+			//wybor najlepszego we wszystkich wierszach
+			if (best > currentMin) {
+				best = currentMin;
+				toRet = current;
+			}
+		}
+
+	return toRet;
+}
