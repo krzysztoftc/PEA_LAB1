@@ -8,9 +8,15 @@
 #ifndef SOLUTIONTREE_H_
 #define SOLUTIONTREE_H_
 
+#include "SolutionNode.h"
+
 class SolutionTree {
+	SolutionNode *root;
+	SolutionNode *bestSolution;
+	void destroy (SolutionNode *root);
 public:
 	SolutionTree();
+
 	virtual ~SolutionTree();
 };
 
