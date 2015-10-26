@@ -26,7 +26,7 @@ void MatrixCosts::create() {
 	if (size == 0)
 		return;
 
-	if (matrix == 0)
+	if (matrix != 0)
 		remove();
 
 	matrix = new int*[size];
@@ -168,3 +168,5 @@ int MatrixCosts::reduction() {
 
 	return bound;
 }
+
+
