@@ -318,3 +318,7 @@ MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts){
 //	}
 }
 
+int MatrixCosts::getSize(){
+	return size;
+}
+

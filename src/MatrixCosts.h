@@ -26,6 +26,7 @@ public:
 	void removeEdge(std::pair <int, int> vert);
 	int blockEdge(std::pair <int, int> vert);
 	MatrixCosts(const MatrixCosts &matrixCosts);
+	int getSize();
 	virtual ~MatrixCosts();
 };
 
