@@ -299,17 +299,18 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 
 	int toRet = matrix[vert.first][vert.second];
 	//blokowanie luku
-		matrix[row][col] = -1;
+	matrix[row][col] = -1;
 
 	return toRet;
 }
 
-MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts){
+MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts) {
 	size = matrixCosts.size;
 
 	create();
 
-	memcpy((void*)matrix,(void*)matrixCosts.matrix,(size*size*sizeof(int)));
+	memcpy((void*) matrix, (void*) matrixCosts.matrix,
+			(size * size * sizeof(int)));
 
 //	for(int i = 0;i<size;i++){
 //		for(int j=0;j<size;j++){
@@ -318,7 +319,11 @@ MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts){
 //	}
 }
 
-int MatrixCosts::getSize(){
+std::pair<int, int> MatrixCosts::getVert(std::pair<int, int> cords) {
+	return std::pair<int, int>(matrix[cords.first][0], matrix[0][cords.second]);
+}
+
+int MatrixCosts::getSize() {
 	return size;
 }
 
