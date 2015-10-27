@@ -14,9 +14,10 @@ class SolutionTree {
 	SolutionNode *root;
 	SolutionNode *bestSolution;
 	void destroy (SolutionNode *root);
+	MatrixCosts firstMatrix;
 public:
-	SolutionTree();
-
+	SolutionTree(MatrixCosts firstMatrix);
+	SolutionNode* goDeeper(SolutionNode *root);
 	virtual ~SolutionTree();
 };
 
