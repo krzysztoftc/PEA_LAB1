@@ -8,16 +8,28 @@
 #include "SolutionTree.h"
 #include <climits>
 
-SolutionTree::SolutionTree(MatrixCosts firstMatrix) {
+SolutionTree::SolutionTree(MatrixCosts &fMatrix) {
 	// TODO Auto-generated constructor stub
 	root = 0;
 	bestSolution = 0;
-	this->firstMatrix = firstMatrix;
+	firstMatrix = fMatrix;
+//	firstMatrix = MatrixCosts();
+//	firstMatrix.generate(5);
+//	std::cout<<"\nMatrix w konstruktorze:\n"<<this->firstMatrix.toString();
+//	std::cout<<"First matrix: "<<&firstMatrix<<std::endl;
+//	std::cout<<"bestSolution: "<<&bestSolution<<std::endl;
+
 }
 
 SolutionTree::~SolutionTree() {
 	// TODO Auto-generated destructor stub
 	destroy(root);
+}
+
+void SolutionTree::show(){
+	std::cout<<"First matrix: "<<&firstMatrix<<std::endl;
+	std::cout<<"bestSolution: "<<&bestSolution<<std::endl;
+	std::cout<<"Show: \n"<<firstMatrix.toString();
 }
 
 void SolutionTree::destroy(SolutionNode *root) {
@@ -32,13 +44,28 @@ void SolutionTree::destroy(SolutionNode *root) {
 
 SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 	SolutionNode *solution = 0;
+//	std::cout<<"\nweszlo goDeeper"<<std::endl;
+//	std::cout<<"First matrix: "<<&firstMatrix<<std::endl;
+//	std::cout<<"bestSolution: "<<&bestSolution<<std::endl;
+
+//	std::cout<<"\nMatrix w goDeeper:\n" <<std::endl;
+//	std::cout<<this->firstMatrix.toString();
+
 	if (root == 0) {
 		root = new SolutionNode();
 		root->matrix = firstMatrix;
+//		std::cout<<"\nMatrix w yfie:\n"<<root->matrix.toString();
+
 		root->leftSon = 0;
 		root->rightSon = 0;
+//		std::cout<<"\nWeszlo1"<<std::endl;
+
 		root->lowBound = root->matrix.reduction();
+//		std::cout<<"\nWeszlo2"<<std::endl;
 	}
+//	std::cout<<"\nPrzeszlo"<<std::endl;
+
+//	std::cout<<"\nMatrix po kolejnym kroku: "<<root -> matrix.toString();
 
 	if (root->matrix.getSize() > 2) {
 		root->leftSon = new SolutionNode;
@@ -48,7 +75,16 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 		son->matrix = root->matrix;
 		son->lowBound += son->matrix.reduction();
 		son->matrix.reduction();
+		std::pair<int, int> best = son->matrix.maxMin();
+		std::pair<int,int > vert = son->matrix.getVert(best);
+		son -> matrix.removeEdge(best);
+		if (son->trace.empty()) son->trace.push_back(vert.first);
+		son ->trace.push_back(vert.second);
+		goDeeper(son);
 	}
+	solution = root -> leftSon;
 
 	return solution;
 }
+
+

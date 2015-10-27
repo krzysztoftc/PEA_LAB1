@@ -16,8 +16,9 @@ class SolutionTree {
 	void destroy (SolutionNode *root);
 	MatrixCosts firstMatrix;
 public:
-	SolutionTree(MatrixCosts firstMatrix);
+	SolutionTree(MatrixCosts &firstMatrix);
 	SolutionNode* goDeeper(SolutionNode *root);
+	void show();
 	virtual ~SolutionTree();
 };
 
