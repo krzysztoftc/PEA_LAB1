@@ -57,23 +57,25 @@ void MatrixCosts::remove() {
 void MatrixCosts::readFile(std::string filename) {
 	std::fstream input;
 	input.open(filename.c_str(), std::ios::in);
+	if (input.good()) {
+		int in;
 
-	int in;
+		remove();
 
-	remove();
+		input >> in;
+		size = in + 1;
 
-	input >> in;
-	size = in + 1;
+		create();
 
-	create();
-
-	for (int i = 1; i < size; i++) {
-		for (int j = 1; j < size; j++) {
-			input >> in;
-			matrix[i][j] = in;
+		for (int i = 1; i < size; i++) {
+			for (int j = 1; j < size; j++) {
+				input >> in;
+				matrix[i][j] = in;
+			}
 		}
+	} else {
+		std::cout << "\nBlad wczytania pliku!" << std::endl;
 	}
-
 	input.close();
 }
 
@@ -307,16 +309,27 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts) {
 	size = matrixCosts.size;
 
-	create();
+//	create();
 
-	memcpy((void*) matrix, (void*) matrixCosts.matrix,
-			(size * size * sizeof(int)));
+	matrix = new int*[size];
 
-//	for(int i = 0;i<size;i++){
-//		for(int j=0;j<size;j++){
-//			matrix [i][j] = matrixCosts.matrix[i][j];
-//		}
-//	}
+	for (int i = 0; i < size; i++) {
+		matrix[i] = new int[size];
+	}
+
+	for (int i = 0; i < size; i++) {
+		matrix[i][0] = i;
+		matrix[0][i] = i;
+	}
+
+//	memcpy((void*) matrix, (void*) matrixCosts.matrix,
+//			(size * size * sizeof(int)));
+
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			matrix[i][j] = matrixCosts.matrix[i][j];
+		}
+	}
 }
 
 std::pair<int, int> MatrixCosts::getVert(std::pair<int, int> cords) {
