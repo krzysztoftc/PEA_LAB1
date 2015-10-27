@@ -309,27 +309,27 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts) {
 	size = matrixCosts.size;
 
-//	create();
+	create();
 
-	matrix = new int*[size];
+//	matrix = new int*[size];
+//
+//	for (int i = 0; i < size; i++) {
+//		matrix[i] = new int[size];
+//	}
+//
+//	for (int i = 0; i < size; i++) {
+//		matrix[i][0] = i;
+//		matrix[0][i] = i;
+//	}
 
-	for (int i = 0; i < size; i++) {
-		matrix[i] = new int[size];
-	}
+	memcpy((void*) matrix, (void*) matrixCosts.matrix,
+			(size * size * sizeof(int)));
 
-	for (int i = 0; i < size; i++) {
-		matrix[i][0] = i;
-		matrix[0][i] = i;
-	}
-
-//	memcpy((void*) matrix, (void*) matrixCosts.matrix,
-//			(size * size * sizeof(int)));
-
-	for (int i = 0; i < size; i++) {
-		for (int j = 0; j < size; j++) {
-			matrix[i][j] = matrixCosts.matrix[i][j];
-		}
-	}
+//	for (int i = 0; i < size; i++) {
+//		for (int j = 0; j < size; j++) {
+//			matrix[i][j] = matrixCosts.matrix[i][j];
+//		}
+//	}
 }
 
 std::pair<int, int> MatrixCosts::getVert(std::pair<int, int> cords) {
@@ -340,3 +340,8 @@ int MatrixCosts::getSize() {
 	return size;
 }
 
+MatrixCosts& MatrixCosts::operator= (MatrixCosts &m){
+	std::swap(this->matrix,m.matrix);
+	std::swap(this->size,m.size);
+	return *this;
+}

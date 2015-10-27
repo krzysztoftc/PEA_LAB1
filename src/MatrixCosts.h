@@ -28,6 +28,7 @@ public:
 	MatrixCosts(const MatrixCosts &matrixCosts);
 	int getSize();
 	std::pair<int,int> getVert(std::pair <int,int> cords);
+	MatrixCosts& operator= (MatrixCosts &m);
 	virtual ~MatrixCosts();
 };
 
