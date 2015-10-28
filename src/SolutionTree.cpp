@@ -7,7 +7,10 @@
 
 #include "SolutionTree.h"
 #include <climits>
-
+//------------------------------------------------
+//PAMIĘTAJ PROGRAMISTO MŁODY ZAWSZE ODRÓŻNIAJ ZMIENNE LOKALNE OD SKŁADNIKÓW KLASY !!!
+// DIS <----- dej pozor :D
+//------------------------------------------------
 SolutionTree::SolutionTree(MatrixCosts &fMatrix) {
 	// TODO Auto-generated constructor stub
 	root = 0;
@@ -50,9 +53,11 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 
 //	std::cout<<"\nMatrix w goDeeper:\n" <<std::endl;
 //	std::cout<<this->firstMatrix.toString();
-
+	std::cout<<"Root: "<<root<<std::endl;
 	if (root == 0) {
-		root = new SolutionNode();
+		this -> root = new SolutionNode();
+		root = this -> root;
+		std::cout<<"Teraz root: "<<root<<std::endl;
 		root->matrix = firstMatrix;
 //		std::cout<<"\nMatrix w yfie:\n"<<root->matrix.toString();
 
@@ -65,9 +70,9 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 	}
 //	std::cout<<"\nPrzeszlo"<<std::endl;
 
-//	std::cout<<"\nMatrix po kolejnym kroku: "<<root -> matrix.toString();
+	std::cout<<"\nMatrix po kolejnym kroku:\n"<<root -> matrix.toString();
 
-	if (root->matrix.getSize() > 2) {
+	if (root->matrix.getSize() > 3) {
 		root->leftSon = new SolutionNode;
 		SolutionNode *son = root->leftSon;
 		son->leftSon = 0;

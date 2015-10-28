@@ -10,6 +10,7 @@
 #include "SalesMan.h"
 #include <stdlib.h>
 #include <time.h>
+#include "SolutionTree.h"
 
 using namespace std;
 
@@ -20,18 +21,27 @@ int main() {
 	MatrixCosts costs;
 	cout << "Wczytany plik:\n";
 
-	//costs.readFile("default.txt");
-	costs.generate(5);
+	costs.readFile("default.txt");
+//	costs.generate(5);
 
-	cout << costs.toString();
+	SolutionTree tree(costs);
+//	tree.show();
+	tree.goDeeper(0);
 
-	cout << "\nRedukcja:\n";
+//	cout << costs.toString()<<endl;
+////
+//	MatrixCosts costs2 = costs;
+//	costs2.generate(4);
+//	cout << costs.toString()<<endl;
+//	cout << costs2.toString()<<endl;
 
-	cout << "LB: " << costs.reduction() << endl;
+//	cout << "\nRedukcja:\n";
+//
+//	cout << "LB: " << costs2.reduction() << endl;
+//
+//	cout << costs2.toString();
 
-	cout << costs.toString();
-
-	pair<int, int> best = costs.maxMin();
+/*	pair<int, int> best = costs.maxMin();
 	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
 			<< endl;
 
@@ -67,6 +77,6 @@ int main() {
 	cout << "Usuwany: " << costs.blockEdge(best) << endl;
 
 	cout << costs.toString() << endl;
-
+*/
 	return 0;
 }

@@ -26,8 +26,8 @@ MatrixCosts::~MatrixCosts() {
 void MatrixCosts::create() {
 	if (size == 0)
 		return;
-
-	if (matrix != 0)
+//std::cout<<"\nW create w matrix jest: "<<matrix<<std::endl;
+//	if (matrix != 0)
 		remove();
 
 	matrix = new int*[size];
@@ -43,6 +43,7 @@ void MatrixCosts::create() {
 }
 
 void MatrixCosts::remove() {
+//	std::cout<<"\nCo jest w matrixie?: "<<matrix<<std::endl;
 	if (matrix) {
 		for (int i = 0; i < size; i++) {
 			if (matrix[i])
@@ -309,27 +310,27 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts) {
 	size = matrixCosts.size;
 
-	create();
+//	create();
 
-//	matrix = new int*[size];
+	matrix = new int*[size];
+
+	for (int i = 0; i < size; i++) {
+		matrix[i] = new int[size];
+	}
+
+	for (int i = 0; i < size; i++) {
+		matrix[i][0] = i;
+		matrix[0][i] = i;
+	}
+
+//	memcpy((void*) matrix, (void*) matrixCosts.matrix,
+//			(size * size * sizeof(int)));
 //
-//	for (int i = 0; i < size; i++) {
-//		matrix[i] = new int[size];
-//	}
-//
-//	for (int i = 0; i < size; i++) {
-//		matrix[i][0] = i;
-//		matrix[0][i] = i;
-//	}
-
-	memcpy((void*) matrix, (void*) matrixCosts.matrix,
-			(size * size * sizeof(int)));
-
-//	for (int i = 0; i < size; i++) {
-//		for (int j = 0; j < size; j++) {
-//			matrix[i][j] = matrixCosts.matrix[i][j];
-//		}
-//	}
+	for (int i = 0; i < size; i++) {
+		for (int j = 0; j < size; j++) {
+			matrix[i][j] = matrixCosts.matrix[i][j];
+		}
+	}
 }
 
 std::pair<int, int> MatrixCosts::getVert(std::pair<int, int> cords) {
