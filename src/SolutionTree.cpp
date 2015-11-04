@@ -83,6 +83,8 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 		if (!solution->trace.empty()) {
 			solution->trace.push_back(solution->trace.front());
 		}
+
+		if(bestSolution == 0 || solution->lowBound < bestSolution->lowBound) bestSolution = solution;
 	}
 	return solution;
 }
