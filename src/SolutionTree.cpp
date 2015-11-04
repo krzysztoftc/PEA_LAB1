@@ -6,6 +6,7 @@
  */
 
 #include "SolutionTree.h"
+#include <list>
 #include <climits>
 //------------------------------------------------
 //PAMIĘTAJ PROGRAMISTO MŁODY ZAWSZE ODRÓŻNIAJ ZMIENNE LOKALNE OD SKŁADNIKÓW KLASY !!!
@@ -47,31 +48,18 @@ void SolutionTree::destroy(SolutionNode *root) {
 
 SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 	SolutionNode *solution = 0;
-//	std::cout<<"\nweszlo goDeeper"<<std::endl;
-//	std::cout<<"First matrix: "<<&firstMatrix<<std::endl;
-//	std::cout<<"bestSolution: "<<&bestSolution<<std::endl;
 
-//	std::cout<<"\nMatrix w goDeeper:\n" <<std::endl;
-//	std::cout<<this->firstMatrix.toString();
-	std::cout << "Root: " << root << std::endl;
 	if (root == 0) {
 		this->root = new SolutionNode();
 		root = this->root;
-//		std::cout << "Teraz root: " << root << std::endl;
 		root->matrix = firstMatrix;
 		root->parent = 0;
-//		std::cout<<"\nMatrix w yfie:\n"<<root->matrix.toString();
 
 		root->leftSon = 0;
 		root->rightSon = 0;
-//		std::cout<<"\nWeszlo1"<<std::endl;
 
 		root->lowBound = root->matrix.reduction();
-//		std::cout<<"\nWeszlo2"<<std::endl;
 	}
-//	std::cout<<"\nPrzeszlo"<<std::endl;
-
-	std::cout << "\nMatrix po kolejnym kroku:\n" << root->matrix.toString();
 
 	if (root->matrix.getSize() > 3) {
 		root->leftSon = new SolutionNode;
@@ -81,17 +69,21 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 		son->rightSon = 0;
 		son->matrix = root->matrix;
 		son->lowBound += son->matrix.reduction();
-		son->matrix.reduction();
+		son->trace = root->trace;
 		std::pair<int, int> best = son->matrix.maxMin();
 		std::pair<int, int> vert = son->matrix.getVert(best);
 		son->matrix.removeEdge(best);
-		if (son->trace.empty())
-			son->trace.push_back(vert.first);
+		son->trace.push_back(vert.first);
 		son->trace.push_back(vert.second);
-		goDeeper(son);
-	}
-	solution = root->leftSon;
 
+		goDeeper(son);
+	} else {
+		solution = root;
+
+		if (!solution->trace.empty()) {
+			solution->trace.push_back(solution->trace.front());
+		}
+	}
 	return solution;
 }
 

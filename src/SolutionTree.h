@@ -18,6 +18,8 @@ class SolutionTree {
 public:
 	SolutionTree(MatrixCosts &firstMatrix);
 	SolutionNode* goDeeper(SolutionNode *root);
+	SolutionNode findSolution();
+
 	void show();
 	virtual ~SolutionTree();
 };
