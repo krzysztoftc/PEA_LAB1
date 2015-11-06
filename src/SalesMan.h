@@ -9,6 +9,7 @@
 #define SALESMAN_H_
 
 #include "MatrixCosts.h"
+#include "Solution.h"
 
 class SalesMan {
 	MatrixCosts matrix;
@@ -18,6 +19,7 @@ public:
 	void readFile (std::string filename);
 	std::string toString();
 	void generate (int cities);
+	Solution exhausted();
 	virtual ~SalesMan();
 };
 
