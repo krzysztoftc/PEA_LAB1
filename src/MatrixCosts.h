@@ -27,6 +27,7 @@ public:
 	int blockEdge(std::pair <int, int> vert);
 	MatrixCosts(const MatrixCosts &matrixCosts);
 	int getSize();
+	int getCost(std::pair<int,int> edge);
 	std::pair<int,int> getVert(std::pair <int,int> cords);
 	MatrixCosts& operator= (MatrixCosts &m);
 	virtual ~MatrixCosts();

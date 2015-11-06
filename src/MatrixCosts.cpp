@@ -346,3 +346,7 @@ MatrixCosts& MatrixCosts::operator= (MatrixCosts &m){
 	std::swap(this->size,m.size);
 	return *this;
 }
+
+int MatrixCosts::getCost(std::pair<int,int> edge){
+	return matrix[edge.first,edge.second];
+}
