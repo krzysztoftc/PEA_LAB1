@@ -8,6 +8,7 @@
 #ifndef SOLUTION_H_
 #define SOLUTION_H_
 
+#include <list>
 
 struct Solution{
 	std::list<int> trace;
