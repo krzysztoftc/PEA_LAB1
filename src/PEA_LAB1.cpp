@@ -18,15 +18,26 @@ int main() {
 	srand(time(0));
 
 	SalesMan seller;
-	MatrixCosts costs;
+	//MatrixCosts costs;
 	cout << "Wczytany plik:\n";
 
-	costs.readFile("default.txt");
+	seller.readFile("default.txt");
+	cout<<seller.toString();
+
+	Solution s = seller.exhausted();
+
+	list<int>::iterator it = s.trace.begin();
+	cout<<endl<<*it++;
+	while(it!=s.trace.end()){
+		cout<<" -> "<<*it++;
+	}
+	cout<<endl<<"cost: "<<s.cost<<endl;
+	//costs.readFile("default.txt");
 //	costs.generate(5);
 
-	SolutionTree tree(costs);
+//	SolutionTree tree(costs);
 //	tree.show();
-	tree.goDeeper(0);
+//	tree.goDeeper(0);
 
 //	cout << costs.toString()<<endl;
 ////
