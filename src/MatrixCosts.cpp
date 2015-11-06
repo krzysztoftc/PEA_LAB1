@@ -348,5 +348,5 @@ MatrixCosts& MatrixCosts::operator= (MatrixCosts &m){
 }
 
 int MatrixCosts::getCost(std::pair<int,int> edge){
-	return matrix[edge.first,edge.second];
+	return matrix[edge.first][edge.second];
 }
