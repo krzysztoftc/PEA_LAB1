@@ -8,6 +8,8 @@
 #include "SolutionTree.h"
 #include <list>
 #include <climits>
+#include "SolutionNode.h"
+
 //------------------------------------------------
 //PAMIĘTAJ PROGRAMISTO MŁODY ZAWSZE ODRÓŻNIAJ ZMIENNE LOKALNE OD SKŁADNIKÓW KLASY !!!
 // DIS <----- dej pozor :D
@@ -75,7 +77,8 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 		son->matrix.removeEdge(best);
 		son->trace.push_back(vert.first);
 		son->trace.push_back(vert.second);
-
+		if (son->lowBound > uBound)
+			return 0;
 		goDeeper(son);
 	} else {
 		solution = root;
@@ -84,8 +87,40 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 			solution->trace.push_back(solution->trace.front());
 		}
 
-		if(bestSolution == 0 || solution->lowBound < bestSolution->lowBound) bestSolution = solution;
+		if (bestSolution == 0 || solution->lowBound < bestSolution->lowBound) {
+			bestSolution = solution;
+			uBound = solution->lowBound;
+		}
 	}
 	return solution;
+}
+
+SolutionNode* SolutionTree::goUp(SolutionNode *node) {
+
+	SolutionNode *parent = node->parent;
+
+	if (parent) {
+		parent->rightSon = new SolutionNode;
+		SolutionNode *son = parent->rightSon;
+
+		son->matrix = parent->matrix;
+		son->trace = parent->trace;
+		son->lowBound += son->matrix.reduction();
+
+		std::pair<int, int> best = son->matrix.maxMin();
+		std::pair<int, int> vert = son->matrix.getVert(best);
+
+		son->matrix.removeEdge(vert);
+
+		if (son->lowBound < uBound) {
+			goUp(goDeeper(son));
+		}
+	}
+
+	return 0;
+}
+
+SolutionNode SolutionTree::findSolution(){
+
 }
 
