@@ -9,15 +9,19 @@
 #define SOLUTIONTREE_H_
 
 #include "SolutionNode.h"
+#include <climits>
 
 class SolutionTree {
 	SolutionNode *root;
 	SolutionNode *bestSolution;
 	void destroy (SolutionNode *root);
 	MatrixCosts firstMatrix;
+	int uBound = INT_MAX;
 public:
 	SolutionTree(MatrixCosts &firstMatrix);
 	SolutionNode* goDeeper(SolutionNode *root);
+	SolutionNode* goUp(SolutionNode *node);
+
 	SolutionNode findSolution();
 
 	void show();
