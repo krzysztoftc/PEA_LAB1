@@ -28,7 +28,7 @@ void MatrixCosts::create() {
 		return;
 //std::cout<<"\nW create w matrix jest: "<<matrix<<std::endl;
 //	if (matrix != 0)
-		remove();
+	remove();
 
 	matrix = new int*[size];
 
@@ -181,7 +181,7 @@ std::pair<int, int> MatrixCosts::maxMin() {
 	std::pair<int, int> current;
 
 	int currentMin = INT_MAX;
-	int best = INT_MAX;
+	int best = 0;
 
 	//przeglad po wierszach
 	for (int i = 1; i < size; i++) {
@@ -191,10 +191,10 @@ std::pair<int, int> MatrixCosts::maxMin() {
 			if (matrix[i][j] == 0) {
 				//jesli sa przynajmniej dwa zera, to mozemy je wybrac
 				if (zero == true) {
-					toRet.first = i;
-					toRet.second = j;
+					current.first = i;
+					current.second = j;
 					currentMin = 0;
-					return toRet;
+					//return toRet;
 				}
 
 				else {
@@ -209,12 +209,16 @@ std::pair<int, int> MatrixCosts::maxMin() {
 					current.second = j;
 				}
 			}
+
 		}
+
 		//wybor najlepszego we wszystkich wierszach
-		if (best > currentMin) {
+		if (currentMin != INT_MAX && best < currentMin) {
 			best = currentMin;
 			toRet = current;
 		}
+//		std::cout << "Current min: " << currentMin << "(" << current.first
+//				<< "," << current.second << ")" << std::endl;
 	}
 
 	//przeglad po kolumnach
@@ -225,10 +229,10 @@ std::pair<int, int> MatrixCosts::maxMin() {
 			if (matrix[j][i] == 0) {
 				//jesli sa przynajmniej dwa zera, to mozemy je wybrac
 				if (zero == true) {
-					toRet.first = i;
-					toRet.second = j;
+					current.first = j;
+					current.second = i;
 					currentMin = 0;
-					return toRet;
+					//return toRet;
 				}
 
 				else {
@@ -239,32 +243,51 @@ std::pair<int, int> MatrixCosts::maxMin() {
 			if (matrix[j][i] > 0) {
 				if (currentMin > matrix[j][i]) {
 					currentMin = matrix[j][i];
-					current.first = i;
-					current.second = j;
+					current.first = j;
+					current.second = i;
 				}
 			}
 		}
 		//wybor najlepszego we wszystkich wierszach
-		if (best > currentMin) {
+		if (currentMin != INT_MAX && best < currentMin) {
 			best = currentMin;
 			toRet = current;
 		}
-	}
+//		std::cout << "Current min: " << currentMin << "(" << current.first
+//				<< "," << current.second << ")" << std::endl;
 
+	}
+//	std::cout << "Best: " << best << "(" << toRet.first << "," << toRet.second
+//			<< ")" << std::endl;
 	return toRet;
 }
 
 //Funkcja usuwa luk "wokol" zadanego wierzcholka
-void MatrixCosts::removeEdge(std::pair<int, int> vert) {
+std::pair<int,int> MatrixCosts::removeEdge(std::pair<int, int> vert) {
 
 	//wybor luku - wiersza, kolumna wg zadanego w wierzcholku
 	int row;
 	int col = vert.second;
-	for (row = 1; matrix[row][col] && row < size; row++)
+	for (row = 1; matrix[row][col] != 0 && row < size; row++)
 		;
 
 	//blokowanie luku powrotnego
-	matrix[col][row] = -1;
+	std::pair<int, int> toBlock = getVert(std::pair<int, int>(row, col));
+	std::swap(toBlock.first, toBlock.second);
+
+	int r, c;
+//	std::cout << "size " << size << " r ";
+	for (r = 1; r < size && matrix[r][0] != toBlock.first; r++)
+//		std::cout << r << std::endl;
+	;
+	for (c = 1; c < size  && matrix[0][c] != toBlock.second; c++)
+		;
+//	std::cout << "chcialbym zablokowac: " << r << " " << c << std::endl;
+
+	if (r < size && c < size) {
+		matrix[r][c] = -1;
+//		std::cout << "I zablokowalem, a co mi tam!" << std::endl;
+	}
 
 	//usuwanie luku - kopiowanie wartosci do tymczasowej tablicy
 	int **temp = new int*[size - 1];
@@ -290,6 +313,9 @@ void MatrixCosts::removeEdge(std::pair<int, int> vert) {
 
 	matrix = temp;
 	size--;
+
+//	std::swap(toBlock.first,toBlock.second);
+	return toBlock;
 }
 
 //funkcja blokuje luk wyznaczony przez wierzcholek
@@ -306,7 +332,6 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 
 	return toRet;
 }
-
 
 MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts) {
 	size = matrixCosts.size;
@@ -342,12 +367,12 @@ int MatrixCosts::getSize() {
 	return size;
 }
 
-MatrixCosts& MatrixCosts::operator= (MatrixCosts &m){
-	std::swap(this->matrix,m.matrix);
-	std::swap(this->size,m.size);
+MatrixCosts& MatrixCosts::operator=(MatrixCosts &m) {
+	std::swap(this->matrix, m.matrix);
+	std::swap(this->size, m.size);
 	return *this;
 }
 
-int MatrixCosts::getCost(std::pair<int,int> edge){
+int MatrixCosts::getCost(std::pair<int, int> edge) {
 	return matrix[edge.first][edge.second];
 }

@@ -50,7 +50,7 @@ void SolutionTree::destroy(SolutionNode *root) {
 
 SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 	SolutionNode *solution = 0;
-	std::cout << "Wchodze do goDeeper root: " << root << std::endl;
+//	std::cout << "Wchodze do goDeeper root: " << root << std::endl;
 
 	if (root == 0) {
 		this->root = new SolutionNode();
@@ -62,8 +62,8 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 		root->rightSon = 0;
 
 		root->lowBound = root->matrix.reduction();
-		std::cout<<"Matrix po redukcji"<<std::endl;
-		std::cout<<root -> matrix.toString()<<std::endl;
+		std::cout << "Matrix po redukcji" << std::endl;
+		std::cout << root->matrix.toString() << std::endl;
 
 	}
 
@@ -76,15 +76,15 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 		son->matrix = root->matrix;
 		son->lowBound = root->lowBound;
 		son->lowBound += son->matrix.reduction();
-		std::cout<<"Matrix po redukcji"<<std::endl;
-		std::cout<<son -> matrix.toString()<<std::endl;
+		std::cout << "Matrix po redukcji" << std::endl;
+		std::cout << son->matrix.toString() << std::endl;
 
 		son->trace = root->trace;
 		son->visited = false;
 
 		if (son->lowBound > uBound) {
 
-			std::cout << "wychodze" << std::endl;
+//			std::cout << "wychodze" << std::endl;
 			return 0;
 		}
 		if (!son->visited) {
@@ -92,23 +92,38 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 			std::pair<int, int> vert = son->matrix.getVert(best);
 			//std::cout<<"Max z min: "<<son->matrix.getCost(vert);
 
-			son->matrix.removeEdge(vert);
-			std::cout<<"Matrix po usuwaniu"<<std::endl;
-			std::cout<<son -> matrix.toString()<<std::endl;
+			std::pair<int, int> edge = son->matrix.removeEdge(vert);
+			std::cout << "Matrix po usuwaniu" << std::endl;
+			std::cout << son->matrix.toString() << std::endl;
 
 			son->trace.push_back(vert.first);
 			son->trace.push_back(vert.second);
 			son->visited = true;
-			std::cout << "Dodaje krawedz: " << vert.first << " " << vert.second
+
+			std::cout << "(" << edge.first << ";" << edge.second << ")"
 					<< std::endl;
 		} else {
-			std::cout << "Cos pomijam" << std::endl;
+//			std::cout << "Cos pomijam" << std::endl;
 		}
 		return goDeeper(son);
 	}
 
 	else {
 		solution = root;
+
+		int r, c;
+		std::pair<int,int> vert(1,1) ;
+		for (vert.first = 1; vert.first < 3; vert.first++) {
+			for (vert.second = 1; vert.second < 3; vert.second++) {
+				if (solution -> matrix.getCost(vert) == 0){
+					std::pair<int,int> ready = solution ->matrix.getVert(vert);
+					std::swap(ready.first,ready.second);
+					std::cout << "(" << ready.first << ";" << ready.second << ")"
+										<< std::endl;
+					root -> matrix.blockEdge(vert);
+				}
+			}
+		}
 
 		if (!solution->trace.empty()) {
 			solution->trace.push_back(solution->trace.front());
@@ -118,20 +133,20 @@ SolutionNode* SolutionTree::goDeeper(SolutionNode *root) {
 			bestSolution = solution;
 			uBound = solution->lowBound;
 		}
-		std::cout << "GoDeeper zwraca: " << root << std::endl;
+//		std::cout << "GoDeeper zwraca: " << root << std::endl;
 		return solution;
 	}
 
-	std::cout << "Cout przy return 0" << std::endl;
+//	std::cout << "Cout przy return 0" << std::endl;
 	return root;
 }
 
 SolutionNode* SolutionTree::goUp(SolutionNode *node) {
-	std::cout << "GoUp node = " << node << std::endl;
+//	std::cout << "GoUp node = " << node << std::endl;
 	SolutionNode *parent = node->parent;
 
 	if (parent) {
-		std::cout << "Wchodze w prawego syna!" << std::endl;
+//		std::cout << "Wchodze w prawego syna!" << std::endl;
 		if (parent->matrix.getSize() > 3) {
 			parent->rightSon = new SolutionNode;
 			SolutionNode *son = parent->rightSon;
@@ -144,14 +159,13 @@ SolutionNode* SolutionTree::goUp(SolutionNode *node) {
 			son->lowBound += son->matrix.reduction();
 
 			std::pair<int, int> best = son->matrix.maxMin();
-			std::cout << "best (" << best.first << " , " << best.second << ")"
-					<< std::endl;
+//			std::cout << "best (" << best.first << " , " << best.second << ")"
+//					<< std::endl;
 			std::pair<int, int> vert = son->matrix.getVert(best);
 
 			son->matrix.blockEdge(vert);
-			std::cout<<"Matrix po blokowaniu"<<std::endl;
-			std::cout<<son -> matrix.toString()<<std::endl;
-
+			std::cout << "Matrix po blokowaniu" << std::endl;
+			std::cout << son->matrix.toString() << std::endl;
 
 			if (son->lowBound < uBound) {
 				goUp(goDeeper(son));
@@ -165,7 +179,7 @@ SolutionNode* SolutionTree::goUp(SolutionNode *node) {
 Solution SolutionTree::findSolution() {
 	Solution solution;
 	SolutionNode *n = goDeeper(0);
-	std::cout << "findSolution *n: " << n << std::endl;
+//	std::cout << "findSolution *n: " << n << std::endl;
 	goUp(n);
 
 	solution.trace = bestSolution->trace;
