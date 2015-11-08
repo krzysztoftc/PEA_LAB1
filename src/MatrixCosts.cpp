@@ -307,6 +307,7 @@ int MatrixCosts::blockEdge(std::pair<int, int> vert) {
 	return toRet;
 }
 
+
 MatrixCosts::MatrixCosts(const MatrixCosts &matrixCosts) {
 	size = matrixCosts.size;
 

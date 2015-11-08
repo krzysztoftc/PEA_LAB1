@@ -18,6 +18,7 @@ struct SolutionNode{
 	SolutionNode *rightSon;
 	SolutionNode *parent;
 	std::list<int> trace;
+	bool visited;
 };
 
 

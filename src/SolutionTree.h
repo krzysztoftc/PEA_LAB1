@@ -9,6 +9,7 @@
 #define SOLUTIONTREE_H_
 
 #include "SolutionNode.h"
+#include "Solution.h"
 #include <climits>
 
 class SolutionTree {
@@ -22,7 +23,7 @@ public:
 	SolutionNode* goDeeper(SolutionNode *root);
 	SolutionNode* goUp(SolutionNode *node);
 
-	SolutionNode findSolution();
+	Solution findSolution();
 
 	void show();
 	virtual ~SolutionTree();

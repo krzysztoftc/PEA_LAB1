@@ -18,26 +18,34 @@ int main() {
 	srand(time(0));
 
 	SalesMan seller;
-	//MatrixCosts costs;
+	MatrixCosts costs;
 	cout << "Wczytany plik:\n";
 
 	seller.readFile("default.txt");
-	cout<<seller.toString();
+	cout << seller.toString();
 
 	Solution s = seller.exhausted();
 
 	list<int>::iterator it = s.trace.begin();
-	cout<<endl<<*it++;
-	while(it!=s.trace.end()){
-		cout<<" -> "<<*it++;
+	cout << endl << *it++;
+	while (it != s.trace.end()) {
+		cout << " -> " << *it++;
 	}
-	cout<<endl<<"cost: "<<s.cost<<endl;
-	//costs.readFile("default.txt");
+	cout << endl << "cost: " << s.cost << endl;
+
+	costs.readFile("default.txt");
 //	costs.generate(5);
 
-//	SolutionTree tree(costs);
+	SolutionTree tree(costs);
 //	tree.show();
-//	tree.goDeeper(0);
+	s = tree.findSolution();
+
+	it = s.trace.begin();
+	cout << endl << *it++;
+	while (it != s.trace.end()) {
+		cout << " -> " << *it++;
+	}
+	cout << endl << "cost: " << s.cost << endl;
 
 //	cout << costs.toString()<<endl;
 ////
@@ -52,42 +60,42 @@ int main() {
 //
 //	cout << costs2.toString();
 
-/*	pair<int, int> best = costs.maxMin();
-	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
-			<< endl;
+	/*	pair<int, int> best = costs.maxMin();
+	 cout << "Max z min = (" << best.first << " ; " << best.second << ")"
+	 << endl;
 
-	costs.removeEdge(best);
+	 costs.removeEdge(best);
 
-	cout << "Usuniecie luku: " << endl;
-	cout << costs.toString() << endl;
+	 cout << "Usuniecie luku: " << endl;
+	 cout << costs.toString() << endl;
 
-	cout << "\nRedukcja:\n";
+	 cout << "\nRedukcja:\n";
 
-	cout << "LB: " << costs.reduction() << endl;
+	 cout << "LB: " << costs.reduction() << endl;
 
-	cout << costs.toString() << endl;
+	 cout << costs.toString() << endl;
 
-	best = costs.maxMin();
-	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
-			<< endl;
-	costs.removeEdge(best);
+	 best = costs.maxMin();
+	 cout << "Max z min = (" << best.first << " ; " << best.second << ")"
+	 << endl;
+	 costs.removeEdge(best);
 
-	cout << "Usuniecie luku: " << endl;
-	cout << costs.toString() << endl;
+	 cout << "Usuniecie luku: " << endl;
+	 cout << costs.toString() << endl;
 
-	cout << "\nRedukcja:\n";
+	 cout << "\nRedukcja:\n";
 
-	cout << "LB: " << costs.reduction() << endl;
+	 cout << "LB: " << costs.reduction() << endl;
 
-	cout << costs.toString() << endl;
+	 cout << costs.toString() << endl;
 
-	cout << "blokowanie luku: " << endl;
-	best = costs.maxMin();
-	cout << "Max z min = (" << best.first << " ; " << best.second << ")"
-			<< endl;
-	cout << "Usuwany: " << costs.blockEdge(best) << endl;
+	 cout << "blokowanie luku: " << endl;
+	 best = costs.maxMin();
+	 cout << "Max z min = (" << best.first << " ; " << best.second << ")"
+	 << endl;
+	 cout << "Usuwany: " << costs.blockEdge(best) << endl;
 
-	cout << costs.toString() << endl;
-*/
+	 cout << costs.toString() << endl;
+	 */
 	return 0;
 }
